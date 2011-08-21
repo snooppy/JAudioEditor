@@ -1425,7 +1425,6 @@ private void jTextPaneCommentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
     Integer id = Integer.valueOf(jLabelId.getText());
     int row = this.audioView.getRowById(id);
     AudioContain audioC = this.audios.getAudios().get(id);
-    audioC.setChanged(true);
     AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
     if (!audio.getTag().getFirst(FieldKey.COMMENT).equals(jTextPaneComments.getText())) {
         jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
@@ -1436,6 +1435,7 @@ private void jTextPaneCommentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
         } catch (FieldDataInvalidException ex) {
             Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        audioC.setChanged(true);
     }
     if (jTextPaneComments.getText().equals("")) {
         jTextPaneComments.setForeground(Color.GRAY);
@@ -1570,7 +1570,7 @@ private void jTextPaneLyricsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRS
     Integer id = Integer.valueOf(jLabelId.getText());
     int row = this.audioView.getRowById(id);
     AudioContain audioC = this.audios.getAudios().get(id);
-    audioC.setChanged(true);
+
     AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
     if (!audio.getTag().getFirst(FieldKey.LYRICS).equals(jTextPaneLyrics.getText())) {
         jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
@@ -1581,6 +1581,7 @@ private void jTextPaneLyricsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRS
         } catch (FieldDataInvalidException ex) {
             Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        audioC.setChanged(true);
     }
 }//GEN-LAST:event_jTextPaneLyricsFocusLost
 

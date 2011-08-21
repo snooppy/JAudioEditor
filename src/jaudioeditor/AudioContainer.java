@@ -125,6 +125,44 @@ public class AudioContainer {
         }
     }
 
+    public void changeArtist(String oldArtist, String album, String newArtist, AudioFile audio) {
+        if (oldArtist.equals("")) {
+            oldArtist = UNKNOW_ARTIST;
+        }
+        if (album.equals("")) {
+            album = UNKNOW_ALBUM;
+        }
+        if (newArtist.equals("")) {
+            newArtist = UNKNOW_ARTIST;
+        }
+        this.artists.get(oldArtist).get(album).remove(audio);
+        if (this.artists.get(oldArtist).get(album).isEmpty()) {
+            this.artists.get(oldArtist).remove(album);
+        }
+        if (this.artists.get(oldArtist).isEmpty()) {
+            this.artists.remove(oldArtist);
+        }
+        /*If this artist already exists*/
+        if (this.artists.containsKey(newArtist)) {
+            /*If this album already exists*/
+            if (this.artists.get(newArtist).containsKey(album)) {
+                this.artists.get(newArtist).get(album).add(audio);
+                /*If this album doesn't exists*/
+            } else {
+                this.artists.get(newArtist).put(album, new ArrayList<AudioFile>());
+                this.artists.get(newArtist).get(album).add(audio);
+            }
+            /*If this artist doesn't exists*/
+        } else {
+            this.artists.put(newArtist, new HashMap<String, ArrayList<AudioFile>>());
+            this.artists.get(newArtist).put(album, new ArrayList<AudioFile>());
+            this.artists.get(newArtist).get(album).add(audio);
+        }
+    }
+
+    public void changeAlbum(String artist, String newAlbum) {
+    }
+
     /**
      * Contains artist or album
      * @param artOrAlb
@@ -324,9 +362,9 @@ public class AudioContainer {
         }
         return false;
     }
-    
-    public void save(){
-     Iterator itAudio = this.audios.keySet().iterator();
+
+    public void save() {
+        Iterator itAudio = this.audios.keySet().iterator();
         while (itAudio.hasNext()) {
             Integer key = (Integer) itAudio.next();
             AudioContain audioC = this.audios.get(key);

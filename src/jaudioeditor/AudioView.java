@@ -268,23 +268,67 @@ public class AudioView {
             return;
         }
         int row = this.getRowById(Integer.valueOf(jLabelId.getText()));
-        if (!jtextField.getText().equals((String) jTableInfo.getValueAt(row, column))) {
-            jTableInfo.setValueAt(jtextField.getText(), row, column);
-            if (label != null) {
-                label.setText(jtextField.getText());
-            }
+        String oldValue = (String) jTableInfo.getValueAt(row, column);
+        String newValue = jtextField.getText();
+        if (!newValue.equals(oldValue)) {
             Integer id = Integer.valueOf(jLabelId.getText());
             AudioContain audioC = this.audios.getAudios().get(id);
             AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
             try {
-                audio.getTagOrCreateAndSetDefault().setField(key, jtextField.getText());
+                audio.getTagOrCreateAndSetDefault().setField(key, newValue);
             } catch (KeyNotFoundException ex) {
                 Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
             } catch (FieldDataInvalidException ex) {
                 Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
             }
-            jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
-            audioC.setChanged(true);
+            if (column == 4) {
+                String album = audio.getTag().getFirst(FieldKey.ALBUM);
+                if (oldValue.equals("")) {
+                    if (!newValue.equals("")) {
+                        this.audios.changeArtist(oldValue, album, newValue, audio);
+                        ((DefaultTableModel) jTableArtist.getModel()).addRow(new Object[]{
+                                    newValue});
+                        jTableInfo.setValueAt(newValue, row, column);
+                        if (label != null) {
+                            label.setText(newValue);
+                        }
+                        jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
+                        audioC.setChanged(true);
+                    } else {
+                        this.audios.changeArtist(oldValue, album, newValue, audio);
+                        jTableInfo.setValueAt(newValue, row, column);
+                        if (label != null) {
+                            label.setText(newValue);
+                        }
+                        jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
+                        audioC.setChanged(true);
+                    }
+                } else {
+                    int rowArtist = getRowByArtist(oldValue);
+                    /*If new and old Artists isn't empty*/
+                    if (!newValue.equals("")) {
+                        this.audios.changeArtist(oldValue, audio.getTag().
+                                getFirst(FieldKey.ALBUM), newValue, audio);
+                        jTableArtist.setValueAt(newValue, rowArtist, 0);
+                        /*If new Artist is empty and old Artist isn't empty*/
+                    } else {
+                        this.audios.changeArtist(oldValue, album, newValue, audio);
+                        if (this.audios.getArtists().get(oldValue) == null) {
+                            ((DefaultTableModel) jTableArtist.getModel()).removeRow(rowArtist);
+                            /* if (jTableInfo.getSelectedRowCount() > 1) {
+                            jTableInfo.setRowSelectionInterval(row, row);
+                            }*/
+                        }
+                    }
+                }
+            } else {
+                jTableInfo.setValueAt(newValue, row, column);
+                if (label != null) {
+                    label.setText(newValue);
+                }
+                jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
+                audioC.setChanged(true);
+            }
         }
     }
 
@@ -296,17 +340,31 @@ public class AudioView {
         int row = this.getRowById(id);
         AudioContain audioC = this.audios.getAudios().get(id);
         AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
-        String str = audio.getTag().getFirst(key);
-        if (!jtextField.getText().equals(str)) {
-            try {
-                audio.getTagOrCreateAndSetDefault().setField(key, jtextField.getText());
-            } catch (KeyNotFoundException ex) {
-                Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (FieldDataInvalidException ex) {
-                Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
+        if (audio.getTag() == null) {
+            if (!jtextField.getText().equals("")) {
+                try {
+                    audio.getTagOrCreateAndSetDefault().setField(key, jtextField.getText());
+                } catch (KeyNotFoundException ex) {
+                    Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FieldDataInvalidException ex) {
+                    Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
+                audioC.setChanged(true);
             }
-            jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
-            audioC.setChanged(true);
+        } else {
+            String str = audio.getTag().getFirst(key);
+            if (!jtextField.getText().equals(str)) {
+                try {
+                    audio.getTagOrCreateAndSetDefault().setField(key, jtextField.getText());
+                } catch (KeyNotFoundException ex) {
+                    Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FieldDataInvalidException ex) {
+                    Logger.getLogger(AudioView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jTableInfo.setValueAt(this.getChangeIcon(), row, 0);
+                audioC.setChanged(true);
+            }
         }
     }
 
@@ -314,5 +372,14 @@ public class AudioView {
         if (jTableInfo.isEditing()) {
             jTableInfo.getDefaultEditor(String.class).stopCellEditing();
         }
+    }
+
+    public int getRowByArtist(String artist) {
+        for (int i = 1; i < jTableArtist.getRowCount(); i++) {
+            if (jTableArtist.getValueAt(i, 0).equals(artist)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

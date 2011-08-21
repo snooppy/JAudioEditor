@@ -1426,16 +1426,30 @@ private void jTextPaneCommentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FI
     int row = this.audioView.getRowById(id);
     AudioContain audioC = this.audios.getAudios().get(id);
     AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
-    if (!audio.getTag().getFirst(FieldKey.COMMENT).equals(jTextPaneComments.getText())) {
-        jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
-        try {
-            audio.getTag().setField(FieldKey.COMMENT, jTextPaneComments.getText());
-        } catch (KeyNotFoundException ex) {
-            Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FieldDataInvalidException ex) {
-            Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+    if (audio.getTag() == null) {
+        if (!jTextPaneComments.getText().equals("")) {
+            try {
+                audio.getTagOrCreateAndSetDefault().setField(FieldKey.COMMENT, jTextPaneComments.getText());
+            } catch (KeyNotFoundException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FieldDataInvalidException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            audioC.setChanged(true);
+            jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
         }
-        audioC.setChanged(true);
+    } else {
+        if (!audio.getTag().getFirst(FieldKey.COMMENT).equals(jTextPaneComments.getText())) {
+            try {
+                audio.getTag().setField(FieldKey.COMMENT, jTextPaneComments.getText());
+            } catch (KeyNotFoundException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FieldDataInvalidException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            audioC.setChanged(true);
+            jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
+        }
     }
     if (jTextPaneComments.getText().equals("")) {
         jTextPaneComments.setForeground(Color.GRAY);
@@ -1488,7 +1502,7 @@ private void jTextFieldOffArtistSiteFocusLost(java.awt.event.FocusEvent evt) {//
 }//GEN-LAST:event_jTextFieldOffArtistSiteFocusLost
 
 private void jTextFieldWikiArtistSiteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldWikiArtistSiteFocusLost
-    this.audioView.setOtherTags(jLabelId, jTextFieldWikiArtistSite, FieldKey.URL_WIKIPEDIA_ARTIST_SITE);
+        this.audioView.setOtherTags(jLabelId, jTextFieldWikiArtistSite, FieldKey.URL_WIKIPEDIA_ARTIST_SITE);
 }//GEN-LAST:event_jTextFieldWikiArtistSiteFocusLost
 
 private void jTextFieldDiscogsArtistUrlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDiscogsArtistUrlFocusLost
@@ -1572,16 +1586,30 @@ private void jTextPaneLyricsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRS
     AudioContain audioC = this.audios.getAudios().get(id);
 
     AudioFile audio = this.audios.getAudios().get(id).getAudioFile();
-    if (!audio.getTag().getFirst(FieldKey.LYRICS).equals(jTextPaneLyrics.getText())) {
-        jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
-        try {
-            audio.getTag().setField(FieldKey.LYRICS, jTextPaneLyrics.getText());
-        } catch (KeyNotFoundException ex) {
-            Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FieldDataInvalidException ex) {
-            Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+    if (audio.getTag() == null) {
+        if (!jTextPaneLyrics.getText().equals("")) {
+            try {
+                audio.getTagOrCreateAndSetDefault().setField(FieldKey.LYRICS, jTextPaneLyrics.getText());
+            } catch (KeyNotFoundException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FieldDataInvalidException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            audioC.setChanged(true);
+            jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
         }
-        audioC.setChanged(true);
+    } else {
+        if (!audio.getTag().getFirst(FieldKey.LYRICS).equals(jTextPaneLyrics.getText())) {
+            try {
+                audio.getTag().setField(FieldKey.LYRICS, jTextPaneLyrics.getText());
+            } catch (KeyNotFoundException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FieldDataInvalidException ex) {
+                Logger.getLogger(JAudioEditorView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            audioC.setChanged(true);
+            jTableInfo.setValueAt(this.audioView.getChangeIcon(), row, 0);
+        }
     }
 }//GEN-LAST:event_jTextPaneLyricsFocusLost
 

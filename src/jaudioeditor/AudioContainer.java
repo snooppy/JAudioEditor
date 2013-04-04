@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.images.Artwork;
 
 /**
  *
@@ -66,8 +66,8 @@ public class AudioContainer {
     }
 
     /**
-     * 
-     * @param audiofile 
+     *
+     * @param audiofile
      */
     public void addAudio(AudioFile audiofile) {
         String artist = "";
@@ -89,7 +89,7 @@ public class AudioContainer {
             try {
                 Artwork art = audiofile.getTag().getFirstArtwork();
                 if (art != null) {
-                    img = art.getImage();
+                    img = (Image) art.getImage();
                     sizeBytes = art.getBinaryData().length;
                     format = art.getMimeType();
                 }
@@ -165,9 +165,10 @@ public class AudioContainer {
 
     /**
      * Contains artist or album
+     *
      * @param artOrAlb
      * @param jTable
-     * @return 
+     * @return
      */
     public boolean containsArtOrAlb(String artOrAlb, JTable jTable) {
         Vector v = ((DefaultTableModel) jTable.getModel()).getDataVector();
@@ -180,10 +181,10 @@ public class AudioContainer {
     }
 
     /**
-     * 
+     *
      * @param list
      * @param audio
-     * @return 
+     * @return
      */
     public boolean containsAudio(ArrayList<AudioFile> list, AudioFile audio) {
         for (AudioFile audioFile : list) {
@@ -212,10 +213,10 @@ public class AudioContainer {
     }
 
     /**
-     * 
+     *
      * @param albums
      * @param album
-     * @return 
+     * @return
      */
     public boolean containsAlbum(ArrayList<String> albums, String album) {
         for (String alb : albums) {
@@ -227,8 +228,8 @@ public class AudioContainer {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getArtisrtsLength() {
         int size = 0;
@@ -243,9 +244,9 @@ public class AudioContainer {
     }
 
     /**
-     * 
+     *
      * @param artist
-     * @return 
+     * @return
      */
     public int getAlbumsLength(String artist) {
         ArrayList<String> albums = new ArrayList<String>();
@@ -273,10 +274,10 @@ public class AudioContainer {
     }
 
     /**
-     * 
+     *
      * @param artist
      * @param album
-     * @return 
+     * @return
      */
     public int getTracksLength(String artist, String album) {
         if (artist == null && album == null) {

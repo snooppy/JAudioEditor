@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jaudioeditor;
 
 import java.awt.Image;
@@ -75,14 +71,14 @@ public class AudioView {
             ImageIcon iconAtrwork = new ImageIcon(artwork);
             if (tag != null) {
                 ((DefaultTableModel) jTableInfo.getModel()).addRow(new Object[]{
-                            icon, tag.getFirst(FieldKey.TRACK),
-                            tag.getFirst(FieldKey.TITLE), tag.getFirst(FieldKey.GENRE),
-                            tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM),
-                            tag.getFirst(FieldKey.YEAR), tag.getFirst(FieldKey.ALBUM_ARTIST),
-                            tag.getFirst(FieldKey.DISC_NO), iconAtrwork, id});
+                    icon, tag.getFirst(FieldKey.TRACK),
+                    tag.getFirst(FieldKey.TITLE), tag.getFirst(FieldKey.GENRE),
+                    tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM),
+                    tag.getFirst(FieldKey.YEAR), tag.getFirst(FieldKey.ALBUM_ARTIST),
+                    tag.getFirst(FieldKey.DISC_NO), iconAtrwork, id});
             } else {
                 ((DefaultTableModel) jTableInfo.getModel()).addRow(new Object[]{
-                            icon, "", "", "", "", "", "", "", "", null, id});
+                    icon, "", "", "", "", "", "", "", "", null, id});
             }
         }
     }
@@ -287,7 +283,7 @@ public class AudioView {
                     if (!newValue.equals("")) {
                         this.audios.changeArtist(oldValue, album, newValue, audio);
                         ((DefaultTableModel) jTableArtist.getModel()).addRow(new Object[]{
-                                    newValue});
+                            newValue});
                         jTableInfo.setValueAt(newValue, row, column);
                         if (label != null) {
                             label.setText(newValue);
@@ -316,8 +312,8 @@ public class AudioView {
                         if (this.audios.getArtists().get(oldValue) == null) {
                             ((DefaultTableModel) jTableArtist.getModel()).removeRow(rowArtist);
                             /* if (jTableInfo.getSelectedRowCount() > 1) {
-                            jTableInfo.setRowSelectionInterval(row, row);
-                            }*/
+                             jTableInfo.setRowSelectionInterval(row, row);
+                             }*/
                         }
                     }
                 }

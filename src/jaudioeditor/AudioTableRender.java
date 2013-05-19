@@ -11,7 +11,7 @@ import javax.swing.table.TableCellRenderer;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class AudioTableRender extends JLabel implements TableCellRenderer {
 

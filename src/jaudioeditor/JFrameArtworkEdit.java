@@ -17,7 +17,7 @@ import org.jaudiotagger.tag.images.StandardArtwork;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class JFrameArtworkEdit extends javax.swing.JFrame {
 

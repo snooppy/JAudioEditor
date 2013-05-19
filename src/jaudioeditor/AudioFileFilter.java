@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 class AudioFileFilter extends javax.swing.filechooser.FileFilter {
 

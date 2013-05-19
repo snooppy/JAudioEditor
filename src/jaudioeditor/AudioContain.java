@@ -5,7 +5,7 @@ import org.jaudiotagger.audio.AudioFile;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class AudioContain {
 

@@ -5,7 +5,7 @@ import org.jdesktop.application.Application;
 /**
  * The main class of the application.
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class JAudioEditorApp extends JAudioSingleFrameApp {
 

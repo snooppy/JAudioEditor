@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jaudioeditor;
 
 import java.awt.Image;
@@ -22,12 +18,12 @@ import org.jaudiotagger.tag.images.Artwork;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class AudioContainer {
 
-    public static final String UNKNOW_ARTIST = "Uuunnnknowww Aaartisttt";
-    public static final String UNKNOW_ALBUM = "Uunnnknowww Aaalbummm";
+    public static final String UNKNOWN_ARTIST = "Uuunnnknowwwn Aaartisttt";
+    public static final String UNKNOWN_ALBUM = "Uunnnknowwwn Aaalbummm";
     private HashMap<String, HashMap<String, ArrayList<AudioFile>>> artists;
     private HashMap<Integer, AudioContain> audios;
     private int counter = 0;
@@ -70,19 +66,19 @@ public class AudioContainer {
      * @param audiofile
      */
     public void addAudio(AudioFile audiofile) {
-        String artist = "";
-        String album = "";
+        String artist;
+        String album;
         Image img = null;
         Integer sizeBytes = 0;
         String format = "";
         if (audiofile.getTag() != null) {
             if (audiofile.getTag().getFirst(FieldKey.ARTIST).equals("")) {
-                artist = UNKNOW_ARTIST;
+                artist = UNKNOWN_ARTIST;
             } else {
                 artist = audiofile.getTag().getFirst(FieldKey.ARTIST);
             }
             if (audiofile.getTag().getFirst(FieldKey.ALBUM).equals("")) {
-                album = UNKNOW_ALBUM;
+                album = UNKNOWN_ALBUM;
             } else {
                 album = audiofile.getTag().getFirst(FieldKey.ALBUM);
             }
@@ -97,8 +93,8 @@ public class AudioContainer {
                 Logger.getLogger(AudioContainer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            artist = UNKNOW_ARTIST;
-            album = UNKNOW_ALBUM;
+            artist = UNKNOWN_ARTIST;
+            album = UNKNOWN_ALBUM;
         }
 
         if (!this.artists.containsKey(artist)) {
@@ -127,13 +123,13 @@ public class AudioContainer {
 
     public void changeArtist(String oldArtist, String album, String newArtist, AudioFile audio) {
         if (oldArtist.equals("")) {
-            oldArtist = UNKNOW_ARTIST;
+            oldArtist = UNKNOWN_ARTIST;
         }
         if (album.equals("")) {
-            album = UNKNOW_ALBUM;
+            album = UNKNOWN_ALBUM;
         }
         if (newArtist.equals("")) {
-            newArtist = UNKNOW_ARTIST;
+            newArtist = UNKNOWN_ARTIST;
         }
         this.artists.get(oldArtist).get(album).remove(audio);
         if (this.artists.get(oldArtist).get(album).isEmpty()) {
@@ -233,10 +229,8 @@ public class AudioContainer {
      */
     public int getArtisrtsLength() {
         int size = 0;
-        Iterator itArtist = this.artists.keySet().iterator();
-        while (itArtist.hasNext()) {
-            String artist = (String) itArtist.next();
-            if (!artist.equals(UNKNOW_ARTIST)) {
+        for (String artist : this.artists.keySet()) {
+            if (!artist.equals(UNKNOWN_ARTIST)) {
                 size++;
             }
         }
@@ -251,18 +245,16 @@ public class AudioContainer {
     public int getAlbumsLength(String artist) {
         ArrayList<String> albums = new ArrayList<String>();
 
-        if (artist != null && !artist.equals(UNKNOW_ALBUM)) {
+        if (artist != null && !artist.equals(UNKNOWN_ALBUM)) {
             return this.artists.get(artist).size();
         } else {
             int size = 0;
             Iterator itArtists = this.artists.keySet().iterator();
             while (itArtists.hasNext()) {
                 artist = (String) itArtists.next();
-                if (!artist.equals(UNKNOW_ARTIST)) {
-                    Iterator itAlbums = this.artists.get(artist).keySet().iterator();
-                    while (itAlbums.hasNext()) {
-                        String album = (String) itAlbums.next();
-                        if (!this.containsAlbum(albums, album) && !album.equals(UNKNOW_ALBUM)) {
+                if (!artist.equals(UNKNOWN_ARTIST)) {
+                    for (String album : this.artists.get(artist).keySet()) {
+                        if (!this.containsAlbum(albums, album) && !album.equals(UNKNOWN_ALBUM)) {
                             albums.add(album);
                             size++;
                         }
@@ -319,8 +311,8 @@ public class AudioContainer {
         int length = audio.getAudioHeader().getTrackLength();
         int min = length / 60;
         int sec = length % 60;
-        String minute = "";
-        String second = "";
+        String minute;
+        String second;
         if (min < 10) {
             minute = "0" + String.valueOf(min);
         } else {
@@ -353,9 +345,7 @@ public class AudioContainer {
     }
 
     public boolean isChanged() {
-        Iterator itAudio = this.audios.keySet().iterator();
-        while (itAudio.hasNext()) {
-            Integer key = (Integer) itAudio.next();
+        for (Integer key : this.audios.keySet()) {
             AudioContain audioC = this.audios.get(key);
             if (audioC.isChanged()) {
                 return true;
@@ -365,9 +355,7 @@ public class AudioContainer {
     }
 
     public void save() {
-        Iterator itAudio = this.audios.keySet().iterator();
-        while (itAudio.hasNext()) {
-            Integer key = (Integer) itAudio.next();
+        for (Integer key : this.audios.keySet()) {
             AudioContain audioC = this.audios.get(key);
             if (audioC.isChanged()) {
                 try {

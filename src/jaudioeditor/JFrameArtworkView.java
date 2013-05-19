@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class JFrameArtworkView extends javax.swing.JFrame {
 

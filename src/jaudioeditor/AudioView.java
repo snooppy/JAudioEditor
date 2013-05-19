@@ -21,7 +21,7 @@ import org.jaudiotagger.tag.Tag;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 public class AudioView {
 
@@ -165,7 +165,7 @@ public class AudioView {
                 while (itAlbums.hasNext()) {
                     String album = (String) itAlbums.next();
                     if (!this.audios.containsArtOrAlb(album, jTableAlbum)
-                            && !album.equals(AudioContainer.UNKNOW_ALBUM)) {
+                            && !album.equals(AudioContainer.UNKNOWN_ALBUM)) {
                         ((DefaultTableModel) jTableAlbum.getModel()).addRow(new Object[]{album});
                         numAlbums++;
                     }
@@ -182,7 +182,7 @@ public class AudioView {
                 while (itAlbums.hasNext()) {
                     String album = (String) itAlbums.next();
                     if (!this.audios.containsArtOrAlb(album, jTableAlbum)
-                            && !album.equals(AudioContainer.UNKNOW_ALBUM)) {
+                            && !album.equals(AudioContainer.UNKNOWN_ALBUM)) {
                         ((DefaultTableModel) jTableAlbum.getModel()).addRow(new Object[]{album});
                         numAlbums++;
                     }
@@ -204,7 +204,7 @@ public class AudioView {
         this.clearJTableInfo();
         while (itArtists.hasNext()) {
             keyArtist = (String) itArtists.next();
-            if (!keyArtist.equals(AudioContainer.UNKNOW_ARTIST)
+            if (!keyArtist.equals(AudioContainer.UNKNOWN_ARTIST)
                     && !this.audios.containsArtOrAlb(keyArtist, jTableArtist)) {
                 ((DefaultTableModel) jTableArtist.getModel()).addRow(new Object[]{keyArtist});
             }
@@ -212,7 +212,7 @@ public class AudioView {
                     iterator();
             while (itAlbums.hasNext()) {
                 keyAlbum = (String) itAlbums.next();
-                if (!keyAlbum.equals(AudioContainer.UNKNOW_ALBUM)
+                if (!keyAlbum.equals(AudioContainer.UNKNOWN_ALBUM)
                         && !this.audios.containsArtOrAlb(keyAlbum, jTableAlbum)) {
                     ((DefaultTableModel) jTableAlbum.getModel()).addRow(new Object[]{keyAlbum});
                 }

@@ -29,7 +29,7 @@ import org.jdesktop.application.View;
 
 /**
  *
- * @author dimon
+ * @author Dmitry Krivenko <dmitrykrivenko@gmal.com>
  */
 /**
  * An application base class for simple GUIs with one primary JFrame.

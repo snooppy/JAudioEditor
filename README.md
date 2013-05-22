@@ -1,2 +1,1 @@
-Advanced tag editor of mp3, flac, ogg, wma, m4a, mp4, m4p, m4b.
-Author: http://dmitrykrivenko.blogspot.com/
+JAudioEditor is an open source project, which use for tagging data in Audio files. It currently fully support Mp3, Mp4 (Mp4 audio, M4a and M4p audio) Ogg Vorbis, Flac and Wma.
